@@ -1,0 +1,281 @@
+/* https://www.w3schools.com/cssref/css_selectors.asp 
+https://www.w3schools.com/cssref/css_units.asp 
+https://www.w3schools.com/cssref/default.asp*/
+
+
+/* Selector Specificity: (id, class, type) */
+/* The :root pseudo-class represents an element that is the root of the document. In HTML, this is always the HTML element. */
+:root {
+  /* Naming convention e.g. --fs-300, --fs-400 gives ability to add variables between when needed later in project e.g. --fs-350  */
+
+  /*--variable is css variable and is accessed e.g. color: var(--variable);*/
+  --clr-accent-100: hsl(13, 100%, 96%);
+  --clr-accent-300: hsl(12, 88%, 75%);
+  --clr-accent-400: hsl(12, 88%, 59%);
+  --clr-accent-500: hsl(12, 60%, 45%);
+  --clr-primary-400: hsl(228, 39%, 23%);
+  --clr-neutral-900: hsl(233, 12%, 13%);
+  --clr-neutral-100: hsl(0, 0%, 100%);
+
+  /*ff - font family*/
+  --ff-primary: "Be Vietnam Pro", sans-serif;
+  --ff-body: var(--ff-primary);
+  --ff-heading: var(--ff-primary);
+
+  /*fw - font weights (thickness)*/
+  --fw-regular: 400;
+  --fw-semi-bold: 500;
+  --fw-bold: 700;
+
+  /* All font sizes being used: */
+  /*fs - font sizes; rem - Relative to font-size of the root element e.g. 2rem means 2 times the size of the current root font. The em and rem units are practical in creating perfectly scalable layout!*/
+  --fs-300: 0.8125rem;  /*13px*/  /* font shouldn't be smaller than 16px, but I am following design file;  base font is 16px */
+  --fs-400: 0.875rem;  /*14px*/  /*400 for body*/
+  --fs-500: 0.9375rem;
+  --fs-600: 1rem;
+  --fs-700: 1.875rem; 
+  --fs-800: 2.5rem;   
+  --fs-900: 3.5rem;
+
+  /* Applying font sizes to custom properties for elements */
+  --fs-body: var(--fs-400);
+  --fs-primary-heading: var(--fs-800);
+  --fs-secondary-heading: var(--fs-700);
+  --fs-nav: var(--fs-500);
+  --fs-button: var(--fs-300);
+
+  /* Custom properties for spacing */
+  --size-100: 0.25rem;
+  --size-200: 0.5rem;
+  --size-300: 0.75rem;
+  --size-400: 1rem;
+  --size-500: 1.25rem;
+  --size-600: 2rem;
+  --size-700: 3rem;
+  --size-800: 4rem;
+  --size-900: 5rem; 
+}
+
+
+/* @media includes CSS properties only if a certain condition is true. */
+/* em is used because it is the only unit that is consistent across all browsers when zooming in and out.
+em or rem in media query uses default browser settings and is not looking in root font size (unlike everywhere else), changing root font size wont change this 50em  */
+@media (min-width: 50em) { /* for bigger screens*/
+  :root {
+    --fs-body: var(--fs-600);
+    --fs-primary-heading: var(--fs-900);
+    --fs-secondary-heading: var(--fs-800);
+    --fs-nav: var(--fs-300);
+  }
+}
+
+/* Resetting css */
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  /* Resets font of all elements, e.g. h1 font is normal text*/
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* a,b {} applies same style to selectors a and b*/
+html,
+body {
+  height: 100%;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;  /* important overrides all previous styling of element */
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Utility classes: */
+/* Utility classes are self-descriptive, single-purpose CSS classes. The classes tell us exactly what they do, so developers can visualize how these elements will be laid out instead of needing to scan through the underlying CSS e.g. class="flex align-center padding-10" */
+/* Convention: classes with numbers in name don't change in media queries, but ones without number may change */
+
+.text-primary-400 {
+  color: var(--clr-primary-400);
+}
+.text-accent-400 {
+  color: var(--clr-accent-400);
+}
+.text-accent-100 {
+  color: var(--clr-accent-100);
+}
+.text-neutral-100 {
+  color: var(--clr-neutral-100);
+}
+.text-neutral-900 {
+  color: var(--clr-neutral-900);
+}
+
+.bg-primary-400 {
+  background-color: var(--clr-primary-400);
+}
+.bg-accent-400 {
+  background-color: var(--clr-accent-400);
+}
+.bg-accent-100 {
+  background-color: var(--clr-accent-100);
+}
+.bg-neutral-100 {
+  background-color: var(--clr-neutral-100);
+}
+.bg-neutral-900 {
+  background-color: var(--clr-neutral-900);
+}
+
+.fw-bold {
+  font-weight: var(--fw-bold);
+}
+.fw-semi-bold {
+  font-weight: var(--fw-semi-bold);
+}
+.fw-regular {
+  font-weight: var(--fw-regular);
+}
+
+.fs-primary-heading {
+  font-size: var(--fs-primary-heading);
+  line-height: 1.1; /* spacing between lines of text */
+}
+.fs-secondary-heading {
+  font-size: var(--fs-secondary-heading);
+  line-height: 1.1;
+}
+
+.fs-300 {
+  font-size: var(--fs-300);
+}
+.fs-400 {
+  font-size: var(--fs-400);
+}
+.fs-500 {
+  font-size: var(--fs-500);
+}
+.fs-600 {
+  font-size: var(--fs-600);
+}
+
+.padding-block-900 {
+  padding: var(--size-900);
+}
+.padding-block-700 {
+  padding: var(--size-700);
+}
+
+.container{
+  /* Locally scoped properties work only in .container class */
+  --max-width: 1110px;
+  --padding: 1rem; /* 16px */
+
+  width: min(var(--max-width), 100% - (var(--padding)*2)); /* width is the smallest of values ; 100% - (var(--padding)*2) separate text from left and right edges for --padding value i.e 16px*/
+  margin-inline: auto; /* inline - left to right; auto - horizontally center the element within its container */
+
+}
+/* - CSS flexbox:
+	- one dimensional (align items in one direction)
+	- only horizontal
+	- your content shape the layout
+- CSS grid:
+	- two dimensional (can work on horizontal and vertical axis)
+	- your layout shape the content
+	- enables intentionally overlap items */
+.even-columns{
+  display: grid;
+  gap: 1rem; /* gap between rows and columns in grid layout */
+}
+
+@media (min-width: 50em) {
+  .even-columns{
+    grid-auto-flow: column; /* Insert auto-placed items column by column, i.e first fill first column then second...; grid-auto-flow: row; first fill first row, then second ...*/
+    grid-auto-columns: 1fr; /* equal width of columns; fr is flexible unit only for grid. Fr is a fractional unit and 1fr is for 1 part of the available space. Fr values can be mixed with fixed and percentage values. The fr values will be divided between the space that’s left after what’s taken by the other values. */
+  }
+}
+
+/* General styling */
+
+body{
+  font-size:var(--fs-body);
+  font-family: var(--ff-body);
+  color: var(--clr-primary-400);
+}
+
+/* button */
+
+.button{
+  border: 0; /* remove border */
+  text-decoration: none; /* no underline or overline on text */
+  border-radius: 100vmax; /* Relative to 1% of viewport's* larger dimension. If the viewport is 50cm wide, 1vw = 0.5cm. */
+  padding: 1.25em 2.5em;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-button);
+  line-height: 1;
+  color: var(--clr-neutral-100);
+  background-color: var(--clr-accent-400);
+  box-shadow: 0 1.125em 1em -1em var(--clr-accent-500);
+}
+
+/* select .button with data-type="inverted" */
+.button[data-type="inverted"]{
+  background-color: var(--clr-neutral-100);
+  color: var(--clr-accent-400);
+}
+
+.button:hover, .button:focus-visible{
+  background-color: var(--clr-accent-300);
+}
+.button[data-type="inverted"]:hover, .button[data-type="inverted"]:focus-visible{
+  background-color: var(--clr-neutral-100);
+  color: var(--clr-accent-300);
+}
+/* todo part 4 */
