@@ -14,23 +14,39 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- It is best to use svg (Scalable vector graphics) for images if possible -->
+    <!-- General rule of thumb is the less aria (for accessibility) is needed it is better (html should be descriptive itself) -->
+
     <header class="primary-header">
       <div class="container">
-        <!-- Link: when logo is clicked goto homepage-->
-        <a href="#"><img src="images/logo.svg" alt="Manage"></a>
-        <!-- Nav bar -->
-        <nav class="primary-navigation">
-          <!-- role="list" is not mandatory but it can have effect on some readers -->
-          <!-- aria- is for accessibility -->
-          <ul aria-label="Primary" role="list" class="nav-list">
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Product</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Community</a></li>
-          </ul>
-        </nav>
-        <button class="button">Get Started</button>
+        <div class="nav-wrapper">
+          <!-- Link: when logo is clicked goto homepage-->
+          <a href="#"><img src="images/logo.svg" alt="Manage"></a>
+          <!-- This button is for mobile devices where navigation is hidden beneath hamburger icon menu button -->
+          <!-- aria-controls - accessibility feature that tells what this button controls (what it does). Text menu is class="vissualy-hidden" but reader device will read "Menu" (it is different approach than aria-label with same effect) -->
+          <button aria-controls="primary-navigation" aria-expanded="false" class="mobile-nav-toggle">
+            <!-- hamburger icon is not important to visually impaired people so it shouldn't read anything => aria-hidden="true" -->
+            <img class="icon-hamburger" src="images/icon-hamburger.svg" alt="" aria-hidden="true">
+            <img class="icon-close" src="images/icon-close.svg" alt="" aria-hidden="true">
+            <span class="visually-hidden">Menu</span>
+          </button>
+
+          <!-- Nav bar -->
+          <!-- id="primary-navigation" is added because aria-controls looks only into id -->
+          <!-- Even though id can be used inside css to style element, it is better to use class for css and use id for linking elements and for selection inside javascript (even better is to use data attributes in javascript) -->
+          <nav class="primary-navigation" id="primary-navigation">
+            <!-- role="list" is not mandatory but it can have effect on some readers -->
+            <ul aria-label="Primary" role="list" class="nav-list">
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">Product</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Community</a></li>
+            </ul>
+          </nav>
+          <!-- sm - small, md - medium -->
+          <button class="button | display-sm-none display-md-inline-flex">Get Started</button>
+        </div>
       </div>
     </header>
 
