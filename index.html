@@ -21,7 +21,11 @@
       <div class="container">
         <div class="nav-wrapper">
           <!-- Link: when logo is clicked goto homepage-->
-          <a href="#"><img src="images/logo.svg" alt="Manage"></a>
+          <a href="#">
+            <svg class="logo" width="146" height="24">
+              <use xlink:href="images/logo.svg#logo"></use>
+            </svg>
+          </a>
           <!-- This button is for mobile devices where navigation is hidden beneath hamburger icon menu button -->
           <!-- aria-controls - accessibility feature that tells what this button controls (what it does). Text menu is class="vissualy-hidden" but reader device will read "Menu" (it is different approach than aria-label with same effect) -->
           <button aria-controls="primary-navigation" aria-expanded="false" class="mobile-nav-toggle">
@@ -57,7 +61,7 @@
         <div class="container">
           <div class="even-columns">
             <!-- First column -->
-            <div>
+            <div class="flow">
               <h1 class="fs-primary-heading fw-bold">
                 Bring everyone together to build better products.
               </h1>
@@ -81,7 +85,7 @@
         <div class="container">
           <div class="even-columns">
             <!-- First column -->
-            <div>
+            <div class="flow">
               <h2 class="fs-secondary-heading fw-bold">What's different about Manage?</h2>
 
               <p>
@@ -90,28 +94,33 @@
             </div>
 
             <!-- Second column -->
-            <div>
+            <div class="flow">
               <!-- Emmet: ul[role="list"].numbered-items>li*3>h3.fs-600.fw-bold+p -->
-              <ul role="list" class="numbered-items">
+              <ul role="list" class="numbered-items | flow">
                 <li>
-                  <h3 class="fs-600 fw-bold">Track company-wide progress</h3>
-                  <p>
-                    See how your day-to-day tasks fit into the wider vision. Go from tracking progress at the milestone level all the way done to the smallest of details. Never lose sight of the bigger picture again.
-                  </p>
+                  <!-- Inline styles shouldn't be used, but only time it is ok to use them is to set custom property like:  style="--flow-spacer: 1em" setting css custom property from html -->
+                  <div class="flow" style="--flow-spacer: 1em">
+                    <h3 class="fs-600 fw-bold">Track company-wide progress</h3>
+                    <p data-width="wide">
+                      See how your day-to-day tasks fit into the wider vision. Go from tracking progress at the milestone level all the way done to the smallest of details. Never lose sight of the bigger picture again.
+                    </p>
+                  </div>
                 </li>
                 <li>
-                  <h3 class="fs-600 fw-bold">Advanced built-in reports</h3>
-                  <p>
-                    Set internal delivery estimates and track progress toward company goals. Our customizable dashboard helps you build out the reports you need to keep key stakeholders informed.
-                  </p>
+                  <div class="flow" style="--flow-spacer: 1em">
+                    <h3 class="fs-600 fw-bold">Advanced built-in reports</h3>
+                    <p data-width="wide">
+                      Set internal delivery estimates and track progress toward company goals. Our customizable dashboard helps you build out the reports you need to keep key stakeholders informed.
+                    </p>
+                  </div>
                 </li>
                 <li>
-                  <h3 class="fs-600 fw-bold">Everything you need in one place</h3>
-                  <p>
-                    Everything you need in one place Stop jumping from one service to another to communicate, store files, 
-  track tasks and share documents. Manage offers an all-in-one team 
-  productivity solution.
-                  </p>
+                  <div class="flow" style="--flow-spacer: 1em">
+                    <h3 class="fs-600 fw-bold">Everything you need in one place</h3>
+                    <p data-width="wide">
+                      Everything you need in one place Stop jumping from one service to another to communicate, store files,  track tasks and share documents. Manage offers an all-in-one team productivity solution.
+                    </p>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -127,14 +136,15 @@
       </section>
 
       <!-- cta = call to action; | is just visual separation between component and utility classes-->
-      <section class="cta | padding-block-700 bg-accent-400 text-neutral-100">
+      <section class="cta | padding-block-900 bg-accent-400 text-neutral-100">
         <div class="container">
           <p class="fs-secondary-heading fw-bold">
-            <div class="even-columns">
+            <div class="even-columns vertical-align-center">
               <div>
-                <p class="fs-secondary-heading">Simplify how your team works today.</p>
+                <p class="fs-primary-heading fw-bold">Simplify how your team works today.</p>
               </div>
-              <div>
+              <!-- push button to far right with class="justify-self-end"  -->
+              <div class="justify-self-end-md">
                 <!-- The data-* attribute (defining custom element attribute) is used to store extra information on standard element -->
                 <button class="button" data-type="inverted">Get Started</button>
               </div>
@@ -145,23 +155,49 @@
     </main>
 
 
-    <footer class="padding-block-700 bg-neutral-900 text-neutral-100">
+    <footer class="primary-footer padding-block-700 bg-neutral-900 text-neutral-100">
       <div class="container">
-        <div class="even-columns">
-          <div>
-            <a href="#"><img src="images/logo.svg" alt="Manage"></a>
-            <ul role="list" aria-label="social links">
+        <div class="primary-footer-wrapper">
+          <div class="primary-footer-logo-social">
+            <!-- Icon inside img tag won't work here because image cannot change color on hover and that is what is needed, so the only solution is to create external svg -->
+            <a href="#" aria-label="home">
+              <svg class="logo" width="146" height="24">
+                <use xlink:href="images/logo.svg#logo"></use>
+              </svg>
+            </a>
+                   
+            <ul class="social-list" role="list" aria-label="social links">
               <!-- aria-label is accessibility attribute that provides name to show when something is missing e.g for people that cannot see and they listen the text reader that says what is on page -->
-              <li><a aria-label="facebook" href="#"><img src="images/icon-facebook.svg" alt="Facebook"></a></li>
-              <li><a aria-label="youtube" href="#"><img src="images/icon-youtube.svg" alt="Youtube"></a></li>
-              <li><a aria-label="twitter" href="#"><img src="images/icon-twitter.svg" alt="Twitter"></a></li>
-              <li><a aria-label="pinterest" href="#"><img src="images/icon-pinterest.svg" alt="Pinterest"></a></li>
-              <li><a aria-label="instagram" href="#"><img src="images/icon-instagram.svg" alt="Instagram"></a></li>
+              <li><a aria-label="facebook" href="#">
+                <svg class="social-icon">
+                  <use xlink:href="images/social-icons.svg#icon-facebook"></use>
+                </svg>
+              </a></li>
+              <li><a aria-label="youtube" href="#">
+                <svg class="social-icon">
+                  <use xlink:href="images/social-icons.svg#icon-youtube"></use>
+                </svg>
+              </a></li>
+              <li><a aria-label="twitter" href="#">
+                <svg class="social-icon">
+                  <use xlink:href="images/social-icons.svg#icon-twitter"></use>
+                </svg>
+              </a></li>
+              <li><a aria-label="pinterest" href="#">
+                <svg class="social-icon">
+                  <use xlink:href="images/social-icons.svg#icon-pinterest"></use>
+                </svg>
+              </a></li>
+              <li><a aria-label="instagram" href="#">
+                <svg class="social-icon">
+                  <use xlink:href="images/social-icons.svg#icon-instagram"></use>
+                </svg>
+              </a></li>
             </ul>
           </div>
-          <div>
+          <div class="primary-footer-nav">
             <nav class="footer-nav">
-              <ul aria-label="Footer" role="list">
+              <ul class="flow" aria-label="Footer" role="list">
                 <!-- VS Code push and hold middle mouse button for multiple cursors on multiple rows -->
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Pricing</a></li>
@@ -173,10 +209,10 @@
               </ul>
             </nav>
           </div>
-          <div>
+          <div class="primary-footer-form">
             <form action="">
               <input type="email" placeholder="Enter your email">
-              <button class="button">Go</button>
+              <button class="button" data-shadow="none">Go</button>
             </form>
             <p>Copyright 2020. All Rights Reserved</p>
           </div>

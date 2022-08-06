@@ -143,35 +143,6 @@ svg {
 
 
 
-.container{
-  /* Locally scoped properties work only in .container class */
-  --max-width: 1110px;
-  --padding: 1rem; /* 16px */
-
-  width: min(var(--max-width), 100% - (var(--padding)*2)); /* width is the smallest of values ; 100% - (var(--padding)*2) separate text from left and right edges for --padding value i.e 16px*/
-  margin-inline: auto; /* inline - left to right; auto - horizontally center the element within its container */
-
-}
-/* - CSS flexbox:
-	- one dimensional (align items in one direction)
-	- only horizontal
-	- your content shape the layout
-- CSS grid:
-	- two dimensional (can work on horizontal and vertical axis)
-	- your layout shape the content
-	- enables intentionally overlap items */
-.even-columns{
-  display: grid;
-  gap: 1rem; /* gap between rows and columns in grid layout */
-}
-
-@media (min-width: 50em) {
-  .even-columns{
-    grid-auto-flow: column; /* Insert auto-placed items column by column, i.e first fill first column then second...; grid-auto-flow: row; first fill first row, then second ...*/
-    grid-auto-columns: 1fr; /* equal width of columns; fr is flexible unit only for grid. Fr is a fractional unit and 1fr is for 1 part of the available space. Fr values can be mixed with fixed and percentage values. The fr values will be divided between the space that’s left after what’s taken by the other values. */
-  }
-}
-
 /* General styling */
 
 body{
@@ -180,10 +151,20 @@ body{
   color: var(--clr-primary-400);
 }
 
+p:not([class]) {
+  opacity: 0.7;
+  max-width: 32ch; /* don't get larger than set number of characters */
+}
+
+p[data-width="width"] {
+  max-width: 45ch;
+}
+
+
 /* button */
 
 .button{
-  display: inline-flex;
+  display: inline-flex; /* if button has icon in it it is best to set display: inline-flex; */
   border: 0; /* remove border */
   text-decoration: none; /* no underline or overline on text */
   border-radius: 100vmax; /* Relative to 1% of viewport's* larger dimension. If the viewport is 50cm wide, 1vw = 0.5cm. */
@@ -200,6 +181,10 @@ body{
 .button[data-type="inverted"]{
   background-color: var(--clr-neutral-100);
   color: var(--clr-accent-400);
+}
+
+.button[data-shadow='none']{
+  box-shadow: none;
 }
 
 .button:hover, .button:focus-visible{
@@ -296,13 +281,164 @@ body{
   }
 }
 
-/*! Styles lover in css file override ones that are higher in css file */
+/* footer */
+
+/* logo.svg has fill="var(--logo-color, #242D52)" so if --logo-color is not defined it will have #242D52 color, but in footer it needs to be white that is var(--clr-neutral-100)  */
+.primary-footer {
+  --logo-color: var(--clr-neutral-100);
+}
+
+.primary-footer-wrapper {
+  display: grid;
+  gap: var(--size-700);
+  /* You can name grid items by using the grid-area property, and then reference to the name in the grid-template-areas property. */
+  /* Show elements beneeth each other on smaller screens */
+  grid-template-areas: 
+      'form'
+      'nav'
+      'logo-social';
+}
+
+
+.primary-footer-logo-social{
+  grid-area: logo-social;
+
+  display: flex;
+  flex-direction: column-reverse; /* column - The flexible items are displayed vertically, as a column; column-reverse - Same as column, but in reverse order */
+  align-items: center;
+  gap: var(--size-700);
+}
+/* Another way of doing same thing when html element doesn't have it's dedicated class is getting html elements with their number from parent element, like this */
+/* :nth-child(number) - number is the child number you are targeting */
+/* .primary-footer-wrapper > :nth-child(1) {
+  grid-area: logo-social;
+} */
+.primary-footer-nav {
+  grid-area: nav;
+}
+.primary-footer-form{
+  grid-area: form;
+
+  display: grid;
+  align-content: space-between;
+}
+
+.primary-footer form{
+  display: flex;
+  gap: var(--size-200);
+}
+
+input:where([type="text"], [type="email"]) {
+  border-radius: 100vw; /* this allays makes pillow shape */
+  border: 0;
+  padding: var(--size-300) var(--size-400);
+}
+
+@media (min-width: 50em) {
+  .primary-footer-wrapper {
+    /* Show elements besides each other (inline) on larger screens */
+    grid-template-areas: "logo-social nav form";
+  }
+  
+  .primary-footer-logo-social {
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--size-700);
+  }
+}
+
+
+@media (max-width: 50em) {
+  .primary-footer-wrapper > * {
+    margin-inline: auto;
+  }
+}
+
+/* Footer navigation */
+
+.footer-nav {
+  columns: 2;
+  gap: clamp(var(--size-200), 10vw, var(--size-900));
+  line-height: 1;
+}
+
+.footer-nav a {
+  color: var(--clr-neutral-100);
+  text-decoration: none;
+}
+/* main :where(h1, h2, h3) equivalent to main h1, main h2, main h3  */
+.footer-nav a:where(:hover,:focus){
+  color: var(--clr-accent-400);
+}
+
+/* todo part 8 */
+
+/* social list */
+
+.social-list {
+  display: flex;
+  gap: var(--size-600)
+}
+
+.social-icon {
+  width: var(--size-600);
+  aspect-ratio: 1; /* svg icons are squares, to eliminate access hight show them as 1:1 aspect ratio */
+  fill: var(--clr-neutral-100);
+}
+
+/* is function is same as where */
+.social-list a:is(:hover, :focus-within) .social-icon{
+  fill: var(--clr-accent-400);
+}
+
+@media (min-width:50em) {
+  .social-list {
+    display: flex;
+    gap: var(--size-300)
+  }
+
+  .social-icon {
+    width: var(--size-500);
+  }
+}
+
+
+/* cta */
+.cta {
+  position: relative;
+  isolation: isolate; /* creating new stacking context - element cannot escape outside of element (or go behind element) */ /* to set bg-tablet-pattern.svg in front of background */
+  text-align: center;
+}
+
+@media (min-width: 50em) {
+  .cta {
+    text-align: left;
+  }
+}
+
+/* ::pseudo-element lets you style a specific part of the selected element(s) 
+::before creates a pseudo-element that is the first child of the selected element*/
+.cta::before {
+  content: ''; /* Because it is pseudo element */
+  position: absolute;
+  z-index: -1; /* to set bg-tablet-pattern.svg behind text */
+  inset: 0;
+  background-image: url("images/bg-tablet-pattern.svg"), 
+                    url("images/bg-tablet-pattern.svg");
+  background-position: -15rem -5rem, 60rem -40rem; /* setting position of each background image of element individually */
+  background-repeat: no-repeat;
+  opacity: 0.1;
+}
+
+
+/*! Styles lower in css file override ones that are higher in css file */
 
 /* Utility classes: */
-/* Utility classes should override everything else so they should be at the bottom of css file */
-/* Sass can generate utility classes */
-/* Utility classes are self-descriptive, single-purpose CSS classes. The classes tell us exactly what they do, so developers can visualize how these elements will be laid out instead of needing to scan through the underlying CSS e.g. class="flex align-center padding-10" */
-/* Convention: classes with numbers in name don't change in media queries, but ones without number may change */
+/* Utility classes should override everything else so they should be at the bottom of css file!
+Utility classes are great thing as project grows.
+Sass can generate utility classes.
+Utility classes are self-descriptive, single-purpose CSS classes. The classes tell us exactly what they do, so developers can visualize how these elements will be laid out instead of needing to scan through the underlying CSS e.g. class="flex align-center padding-10".
+Convention: classes with numbers in name don't change in media queries, but ones without number may change. */
 
 /* This can be always copied and used when some element needs to be invisible */
 .visually-hidden {
@@ -317,6 +453,61 @@ body{
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+.container{
+  /* Locally scoped properties work only in .container class */
+  --max-width: 1110px;
+  --padding: 1rem; /* 16px */
+
+  width: min(var(--max-width), 100% - (var(--padding)*2)); /* width is the smallest of values ; 100% - (var(--padding)*2) separate text from left and right edges for --padding value i.e 16px*/
+  margin-inline: auto; /* inline - left to right; auto - horizontally center the element within its container */
+
+}
+
+/* - CSS flexbox:
+	- one dimensional (align items in one direction)
+	- only horizontal
+	- your content shape the layout
+- CSS grid:
+	- two dimensional (can work on horizontal and vertical axis)
+	- your layout shape the content
+	- enables intentionally overlap items */
+.even-columns{
+  display: grid;
+  gap: 1rem; /* gap between rows and columns in grid layout */
+}
+
+
+@media (min-width: 50em) {
+  .even-columns{
+    grid-auto-flow: column; /* Insert auto-placed items column by column, i.e first fill first column then second...; grid-auto-flow: row; first fill first row, then second ...*/
+    grid-auto-columns: 1fr; /* equal width of columns; fr is flexible unit only for grid. Fr is a fractional unit and 1fr is for 1 part of the available space. Fr values can be mixed with fixed and percentage values. The fr values will be divided between the space that’s left after what’s taken by the other values. */
+  }
+}
+
+.vertical-align-center {
+  align-items: center;
+}
+
+/* This only works on grid and doesn't work on flexbox */
+.justify-self-end {
+  justify-self: end;
+}
+
+@media (min-width: 50em) {
+  .justify-self-end-md {
+    justify-self: end;
+  }
+}
+
+/* .flow>*+* - selecting every sibling and omitting first one. 
+Same as .flow:not(:first-child) - but this one has high specificity and cannot be overridden easily
+:where(.flow:not(:first-child)) - because of :where this has specificity of 0 */
+:where(.flow :not(:first-child)) { 
+  margin-top: var(--flow-spacer, 3em);
+  /* If --flow-spacer is not defined it will use 3em, else it will use custom property.  */
+}
+
 
 .text-primary-400 {
   color: var(--clr-primary-400);
@@ -397,4 +588,3 @@ body{
     display: inline-flex;
   }
 }
-/* todo part 5 */
