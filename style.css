@@ -371,7 +371,6 @@ input:where([type="text"], [type="email"]) {
   color: var(--clr-accent-400);
 }
 
-/* todo part 8 */
 
 /* social list */
 
@@ -430,6 +429,78 @@ input:where([type="text"], [type="email"]) {
   opacity: 0.1;
 }
 
+/* numbered items */
+
+.numbered-items {
+  counter-reset: count; /* Resetting counter. Name of counter is "count" */
+  width: fit-content; /* fit-content (allows line wraps when there is not enough space else it has max width) is in between of min-content (element has width of shortest word) and max-content (element has max allowed width, there are no line brakes, on smaller screens it may cause site zooming-out)  */
+  margin-inline: auto; /* centering content */
+}
+
+.numbered-items li {
+  counter-increment: count; /* Increment "count" counter by 1 */
+}
+
+.numbered-items div {
+  display: grid;
+  position: relative;
+  align-items: center;
+  column-gap: var(--size-300);
+  grid-template-columns: min-content 1fr;
+}
+
+.numbered-items__title {
+  grid-row: 1 / 2; /* grid-row-start: 1; grid-row-end: 2; */
+  grid-column: 2/3;
+  line-height: 1;
+}
+
+.numbered-items__body {
+  grid-column: 1/-1; /* Stretch 1 column on whole width */
+}
+
+
+@media (min-width:30em) {
+  .numbered-items__body {
+    grid-column: 2/-1; /* Stretch 2 columns on whole width  */
+  }
+}
+
+.numbered-items div::before,
+.numbered-items div::after {
+  height: 40px;
+}
+
+.numbered-items div::before {
+  content: "0" counter(count); /* Numbers are shown as 01 02 ... */
+  display: flex;
+  align-items: center;
+  color: var(--clr-neutral-100);
+  font-weight: var(--fw-bold);
+  background-color: var(--clr-accent-400);
+  padding: 0 var(--size-500);
+  border-radius: 100vw;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+
+@media (max-width: 50em) {
+  /* Show background beneath text only on small screens */
+  .numbered-items div::after {
+    --bg: var(--clr-accent-100);
+    content: '';
+    display: block;
+    z-index: -1;
+    border-radius: 100vw 0 0 100vw;
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    background: var(--bg);
+    box-shadow: 10em 0 0 var(--bg); /*Extend background to right end. Box shadow can't cause overflow, it is visual only. */
+  }
+}
+
+/* todo part 9 */
+
 
 /*! Styles lower in css file override ones that are higher in css file */
 
@@ -457,9 +528,9 @@ Convention: classes with numbers in name don't change in media queries, but ones
 .container{
   /* Locally scoped properties work only in .container class */
   --max-width: 1110px;
-  --padding: 1rem; /* 16px */
+  --container-padding: 1rem; /* 16px */
 
-  width: min(var(--max-width), 100% - (var(--padding)*2)); /* width is the smallest of values ; 100% - (var(--padding)*2) separate text from left and right edges for --padding value i.e 16px*/
+  width: min(var(--max-width), 100% - (var(--container-padding)*2)); /* width is the smallest of values ; 100% - (var(--padding)*2) separate text from left and right edges for --padding value i.e 16px*/
   margin-inline: auto; /* inline - left to right; auto - horizontally center the element within its container */
 
 }
@@ -508,6 +579,24 @@ Same as .flow:not(:first-child) - but this one has high specificity and cannot b
   /* If --flow-spacer is not defined it will use 3em, else it will use custom property.  */
 }
 
+.text-center {
+  text-align: center;
+}
+
+.text-center p {
+  margin-inline: auto;
+}
+
+@media (max-width: 50em) {
+  /* sm - small */
+  .text-center-sm-only {
+    text-align: center;
+  }
+
+  .text-center-sm-only p {
+    margin-inline: auto;
+  }
+}
 
 .text-primary-400 {
   color: var(--clr-primary-400);
@@ -579,6 +668,10 @@ Same as .flow:not(:first-child) - but this one has high specificity and cannot b
 .padding-block-700 {
   padding: var(--size-700);
 }
+.margin-bottom-700 {
+  margin-block-end: var(--size-700);
+}
+
 .display-sm-none {
   display: none;
 }
