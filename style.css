@@ -19,6 +19,7 @@ https://www.w3schools.com/cssref/css_units.asp
   --clr-accent-500: hsl(12, 60%, 45%);
   --clr-primary-400: hsl(228, 39%, 23%);
   --clr-neutral-100: hsl(0, 0%, 100%);
+  --clr-neutral-200: hsl(0, 0%, 97%);
   --clr-neutral-900: hsl(233, 12%, 13%);
 
   /*ff - font family*/
@@ -499,7 +500,86 @@ input:where([type="text"], [type="email"]) {
   }
 }
 
-/* todo part 9 */
+/* todo part 10 */
+/* slider */
+
+.slider {
+  display: flex;
+  gap: var(--size-600);
+  list-style: none; /* remove list dots */ 
+}
+
+/* slider component generates div container with this class; editing class to separate slide from edge of the screen */
+.a11y-slider-container {
+  margin-block: var(--size-700);
+  margin-inline: var(--size-400);
+}
+
+.slider > * {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 40em) {
+  .slider {
+    scroll-padding-inline: 25px;
+  }
+
+  .a11y-slider-container {
+    margin-inline: 0; /*Slide bleeds over the edge*/
+  }
+  .slider > * {
+    width: 50%; /* On smaller screens 2 images (slides) will be shown*/
+  }
+}
+
+@media (min-width: 50em) {
+  .slider > * {
+    width: 35%; /*On larger screens 2.5 slides will be shown */
+  }
+}
+
+.slider-content {
+  border-radius: var(--size-100);
+  padding: var(--size-700) var(--size-600) var(--size-600);
+  background: var(--clr-neutral-200);
+}
+
+.slider img {
+  width: var(--size-800);
+  position: relative;
+  top: calc(var(--size-800) / 2);
+  margin-inline: auto;
+}
+/* Styling dots */
+.a11y-slider-dots {
+  display: flex;
+  justify-content: center;
+  margin-block: var(--size-500);
+  gap: var(--size-300);
+}
+.a11y-slider-dots li {
+  display: block;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+}
+
+.a11y-slider-dots li button {
+  display: block;
+  font-size: 0;
+  text-indent: -9999px; /*Indenting first line of text */ 
+  background: transparent;
+  border: 1px solid var(--clr-accent-400) !important;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+
+.a11y-slider-dots li button.active {
+  background: var(--clr-accent-400);
+}
 
 
 /*! Styles lower in css file override ones that are higher in css file */

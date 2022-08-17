@@ -19,3 +19,16 @@ navToggle.addEventListener('click', ()=>{
         iconClose.style.display="block" 
     }
 })
+
+// to rotate images in slider 
+const slider = new A11YSlider(document.querySelector('.slider'), {
+    adaptiveHeight: false,
+    dots: true,
+    centerMode: true,
+    arrows: false, // removing buttons previous/next slide
+    responsive: {
+        480: {
+          dots: false // dots disabled 480px and up
+        }
+      }
+  });
