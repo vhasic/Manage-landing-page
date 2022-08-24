@@ -34,12 +34,12 @@ https://www.w3schools.com/cssref/css_units.asp
 
   /* All font sizes being used: */
   /*fs - font sizes; rem - Relative to font-size of the root element e.g. 2rem means 2 times the size of the current root font. The em and rem units are practical in creating perfectly scalable layout!*/
-  --fs-300: 0.8125rem;  /*13px*/  /* font shouldn't be smaller than 16px, but I am following design file;  base font is 16px */
-  --fs-400: 0.875rem;  /*14px*/  /*400 for body*/
+  --fs-300: 0.8125rem; /*13px*/ /* font shouldn't be smaller than 16px, but I am following design file;  base font is 16px */
+  --fs-400: 0.875rem; /*14px*/ /*400 for body*/
   --fs-500: 0.9375rem;
   --fs-600: 1rem;
-  --fs-700: 1.875rem; 
-  --fs-800: 2.5rem;   
+  --fs-700: 1.875rem;
+  --fs-800: 2.5rem;
   --fs-900: 3.5rem;
 
   /* Applying font sizes to custom properties for elements */
@@ -58,14 +58,14 @@ https://www.w3schools.com/cssref/css_units.asp
   --size-600: 2rem;
   --size-700: 3rem;
   --size-800: 4rem;
-  --size-900: 5rem; 
+  --size-900: 5rem;
 }
-
 
 /* @media includes CSS properties only if a certain condition is true. */
 /* em is used because it is the only unit that is consistent across all browsers when zooming in and out.
 em or rem in media query uses default browser settings and is not looking in root font size (unlike everywhere else), changing root font size wont change this 50em  */
-@media (min-width: 50em) { /* for bigger screens*/
+@media (min-width: 50em) {
+  /* for bigger screens*/
   :root {
     --fs-body: var(--fs-600);
     --fs-primary-heading: var(--fs-900);
@@ -103,7 +103,8 @@ html:focus-within {
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
 }
 
 /* Set core body defaults */
@@ -135,19 +136,17 @@ svg {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;  /* important overrides all previous styling of element */
+    animation-duration: 0.01ms !important; /* important overrides all previous styling of element */
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
 
-
-
 /* General styling */
 
-body{
-  font-size:var(--fs-body);
+body {
+  font-size: var(--fs-body);
   font-family: var(--ff-body);
   color: var(--clr-primary-400);
 }
@@ -161,10 +160,9 @@ p[data-width="width"] {
   max-width: 45ch;
 }
 
-
 /* button */
 
-.button{
+.button {
   display: inline-flex; /* if button has icon in it it is best to set display: inline-flex; */
   border: 0; /* remove border */
   text-decoration: none; /* no underline or overline on text */
@@ -179,19 +177,21 @@ p[data-width="width"] {
 }
 
 /* select .button with data-type="inverted" */
-.button[data-type="inverted"]{
+.button[data-type="inverted"] {
   background-color: var(--clr-neutral-100);
   color: var(--clr-accent-400);
 }
 
-.button[data-shadow='none']{
+.button[data-shadow="none"] {
   box-shadow: none;
 }
 
-.button:hover, .button:focus-visible{
+.button:hover,
+.button:focus-visible {
   background-color: var(--clr-accent-300);
 }
-.button[data-type="inverted"]:hover, .button[data-type="inverted"]:focus-visible{
+.button[data-type="inverted"]:hover,
+.button[data-type="inverted"]:focus-visible {
   background-color: var(--clr-neutral-100);
   color: var(--clr-accent-300);
 }
@@ -202,7 +202,7 @@ p[data-width="width"] {
   padding-top: var(--size-700);
 }
 
-.nav-wrapper{
+.nav-wrapper {
   display: flex; /* Things go next to each other */
   justify-content: space-between;
   align-items: center;
@@ -213,10 +213,13 @@ p[data-width="width"] {
   display: none;
 }
 
-
 .nav-list {
   display: flex;
-  gap: clamp(var(--size-400), 5vw, var(--size-700)); /* As screen sizes get smaller gap becomes smaller, as we have more space gap widens */ /* The clamp() CSS function clamps a value between an upper and lower bound. clamp() enables selecting a middle value within a range of values between a defined minimum and maximum. It takes three parameters: a minimum value, a preferred value, and a maximum allowed value. */
+  gap: clamp(
+    var(--size-400),
+    5vw,
+    var(--size-700)
+  ); /* As screen sizes get smaller gap becomes smaller, as we have more space gap widens */ /* The clamp() CSS function clamps a value between an upper and lower bound. clamp() enables selecting a middle value within a range of values between a defined minimum and maximum. It takes three parameters: a minimum value, a preferred value, and a maximum allowed value. */
   font-size: var(--fs-nav);
   font-weight: var(--fw-semi-bold);
 }
@@ -226,22 +229,28 @@ p[data-width="width"] {
   color: var(--clr-primary-400);
 }
 
-.nav-list a:hover, .nav-list a:focus {
+.nav-list a:hover,
+.nav-list a:focus {
   color: var(--clr-accent-400);
 }
 
 /*! Media queries allays come after anything to override what is higher  */
 
 /* Navigation for small screens */
-@media (max-width: 50em){
-  .primary-navigation{
+@media (max-width: 50em) {
+  /* CSS attribute selector: everything inside .primary-header with attribute data-overlay gets new stacking context  */
+  .primary-header[data-overlay] {
+    position: relative;
+    z-index: 999;
+  }
+  .primary-navigation {
     display: none;
 
     position: fixed;
     padding: var(--size-700);
     inset: 7rem var(--size-400) auto; /* Indenting from top right bottom left */
     max-width: 25rem;
-    margin-left: auto; /* keep it on right side */
+    margin-inline: auto; /* keep it centered */
     background: var(--clr-neutral-100);
     border-radius: var(--size-100);
     box-shadow: 0 0 0.5em rgb(0, 0, 0.05);
@@ -261,7 +270,7 @@ p[data-width="width"] {
     font-weight: var(--fw-bold);
   }
 
-  .primary-navigation[data-visible]{
+  .primary-navigation[data-visible] {
     display: block;
   }
 
@@ -276,7 +285,7 @@ p[data-width="width"] {
     border: 0;
     padding: 0.5em;
   }
-  
+
   .mobile-nav-toggle .icon-close {
     display: none;
   }
@@ -293,15 +302,14 @@ p[data-width="width"] {
   display: grid;
   gap: var(--size-700);
   /* You can name grid items by using the grid-area property, and then reference to the name in the grid-template-areas property. */
-  /* Show elements beneeth each other on smaller screens */
-  grid-template-areas: 
-      'form'
-      'nav'
-      'logo-social';
+  /* Show elements beneath each other on smaller screens */
+  grid-template-areas:
+    "form"
+    "nav"
+    "logo-social";
 }
 
-
-.primary-footer-logo-social{
+.primary-footer-logo-social {
   grid-area: logo-social;
 
   display: flex;
@@ -317,14 +325,14 @@ p[data-width="width"] {
 .primary-footer-nav {
   grid-area: nav;
 }
-.primary-footer-form{
+.primary-footer-form {
   grid-area: form;
 
   display: grid;
   align-content: space-between;
 }
 
-.primary-footer form{
+.primary-footer form {
   display: flex;
   gap: var(--size-200);
 }
@@ -340,14 +348,13 @@ input:where([type="text"], [type="email"]) {
     /* Show elements besides each other (inline) on larger screens */
     grid-template-areas: "logo-social nav form";
   }
-  
+
   .primary-footer-logo-social {
     align-items: flex-start;
     justify-content: space-between;
     gap: var(--size-700);
   }
 }
-
 
 @media (max-width: 50em) {
   .primary-footer-wrapper > * {
@@ -368,16 +375,15 @@ input:where([type="text"], [type="email"]) {
   text-decoration: none;
 }
 /* main :where(h1, h2, h3) equivalent to main h1, main h2, main h3  */
-.footer-nav a:where(:hover,:focus){
+.footer-nav a:where(:hover, :focus) {
   color: var(--clr-accent-400);
 }
-
 
 /* social list */
 
 .social-list {
   display: flex;
-  gap: var(--size-600)
+  gap: var(--size-600);
 }
 
 .social-icon {
@@ -387,21 +393,20 @@ input:where([type="text"], [type="email"]) {
 }
 
 /* is function is same as where */
-.social-list a:is(:hover, :focus-within) .social-icon{
+.social-list a:is(:hover, :focus-within) .social-icon {
   fill: var(--clr-accent-400);
 }
 
-@media (min-width:50em) {
+@media (min-width: 50em) {
   .social-list {
     display: flex;
-    gap: var(--size-300)
+    gap: var(--size-300);
   }
 
   .social-icon {
     width: var(--size-500);
   }
 }
-
 
 /* cta */
 .cta {
@@ -419,12 +424,12 @@ input:where([type="text"], [type="email"]) {
 /* ::pseudo-element lets you style a specific part of the selected element(s) 
 ::before creates a pseudo-element that is the first child of the selected element*/
 .cta::before {
-  content: ''; /* Because it is pseudo element */
+  content: ""; /* Because it is pseudo element */
   position: absolute;
   z-index: -1; /* to set bg-tablet-pattern.svg behind text */
   inset: 0;
-  background-image: url("images/bg-tablet-pattern.svg"), 
-                    url("images/bg-tablet-pattern.svg");
+  background-image: url("images/bg-tablet-pattern.svg"),
+    url("images/bg-tablet-pattern.svg");
   background-position: -15rem -5rem, 60rem -40rem; /* setting position of each background image of element individually */
   background-repeat: no-repeat;
   opacity: 0.1;
@@ -460,8 +465,7 @@ input:where([type="text"], [type="email"]) {
   grid-column: 1/-1; /* Stretch 1 column on whole width */
 }
 
-
-@media (min-width:30em) {
+@media (min-width: 30em) {
   .numbered-items__body {
     grid-column: 2/-1; /* Stretch 2 columns on whole width  */
   }
@@ -489,7 +493,7 @@ input:where([type="text"], [type="email"]) {
   /* Show background beneath text only on small screens */
   .numbered-items div::after {
     --bg: var(--clr-accent-100);
-    content: '';
+    content: "";
     display: block;
     z-index: -1;
     border-radius: 100vw 0 0 100vw;
@@ -500,13 +504,12 @@ input:where([type="text"], [type="email"]) {
   }
 }
 
-/* todo part 10 */
 /* slider */
 
 .slider {
   display: flex;
   gap: var(--size-600);
-  list-style: none; /* remove list dots */ 
+  list-style: none; /* remove list dots */
 }
 
 /* slider component generates div container with this class; editing class to separate slide from edge of the screen */
@@ -569,7 +572,7 @@ input:where([type="text"], [type="email"]) {
 .a11y-slider-dots li button {
   display: block;
   font-size: 0;
-  text-indent: -9999px; /*Indenting first line of text */ 
+  text-indent: -9999px; /*Indenting first line of text */
   background: transparent;
   border: 1px solid var(--clr-accent-400) !important;
   width: 100%;
@@ -581,6 +584,59 @@ input:where([type="text"], [type="email"]) {
   background: var(--clr-accent-400);
 }
 
+/* hero */
+
+/* on small screens reverse order: first show image then text */
+@media (max-width: 50em) {
+  .hero__image {
+    order: -1;
+  }
+}
+
+.hero__image::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  top: 0;
+  width: 80%;
+  max-height: 70vh;
+  max-height: 70dvh; /* Some browsers don't support dvh, and they will use first 70vh, others will override 70vh with 70dvh */
+  aspect-ratio: 1/1.2;
+  background-image: url("images/bg-tablet-pattern.svg");
+  background-repeat: no-repeat;
+  background-position: bottom left;
+}
+
+@media (min-width: 50em) {
+  .hero__image::before {
+    width: 45%;
+  }
+}
+
+/* sales points */
+
+.sales-points {
+  position: relative;
+}
+
+.sales-points__blog::before {
+  content: url("images/bg-tablet-pattern.svg"); /* Because this image is in middle of page it can't be done properly as background-image so it is done as content */
+  position: absolute;
+  z-index: -1;
+  left: 70%;
+  bottom: 90%; /* This works because .sales-points is position: relative; */
+  width: 200px;
+  aspect-ratio: 1/1.2;
+}
+
+@media (min-width: 50em) {
+  .sales-points__blog::before {
+    left: -500px;
+    top: 40%;
+    width: 100px;
+  }
+}
 
 /*! Styles lower in css file override ones that are higher in css file */
 
@@ -600,19 +656,21 @@ Convention: classes with numbers in name don't change in media queries, but ones
   padding: 0 !important;
   margin: -1px !important;
   overflow: hidden !important;
-  clip: rect(0,0,0,0) !important;
+  clip: rect(0, 0, 0, 0) !important;
   white-space: nowrap !important;
   border: 0 !important;
 }
 
-.container{
+.container {
   /* Locally scoped properties work only in .container class */
   --max-width: 1110px;
   --container-padding: 1rem; /* 16px */
 
-  width: min(var(--max-width), 100% - (var(--container-padding)*2)); /* width is the smallest of values ; 100% - (var(--padding)*2) separate text from left and right edges for --padding value i.e 16px*/
+  width: min(
+    var(--max-width),
+    100% - (var(--container-padding) * 2)
+  ); /* width is the smallest of values ; 100% - (var(--padding)*2) separate text from left and right edges for --padding value i.e 16px*/
   margin-inline: auto; /* inline - left to right; auto - horizontally center the element within its container */
-
 }
 
 /* - CSS flexbox:
@@ -623,14 +681,13 @@ Convention: classes with numbers in name don't change in media queries, but ones
 	- two dimensional (can work on horizontal and vertical axis)
 	- your layout shape the content
 	- enables intentionally overlap items */
-.even-columns{
+.even-columns {
   display: grid;
   gap: 1rem; /* gap between rows and columns in grid layout */
 }
 
-
 @media (min-width: 50em) {
-  .even-columns{
+  .even-columns {
     grid-auto-flow: column; /* Insert auto-placed items column by column, i.e first fill first column then second...; grid-auto-flow: row; first fill first row, then second ...*/
     grid-auto-columns: 1fr; /* equal width of columns; fr is flexible unit only for grid. Fr is a fractional unit and 1fr is for 1 part of the available space. Fr values can be mixed with fixed and percentage values. The fr values will be divided between the space that’s left after what’s taken by the other values. */
   }
@@ -654,7 +711,7 @@ Convention: classes with numbers in name don't change in media queries, but ones
 /* .flow>*+* - selecting every sibling and omitting first one. 
 Same as .flow:not(:first-child) - but this one has high specificity and cannot be overridden easily
 :where(.flow:not(:first-child)) - because of :where this has specificity of 0 */
-:where(.flow :not(:first-child)) { 
+:where(.flow :not(:first-child)) {
   margin-top: var(--flow-spacer, 3em);
   /* If --flow-spacer is not defined it will use 3em, else it will use custom property.  */
 }
@@ -752,11 +809,15 @@ Same as .flow:not(:first-child) - but this one has high specificity and cannot b
   margin-block-end: var(--size-700);
 }
 
+.mx-auto {
+  margin-inline: auto;
+}
+
 .display-sm-none {
   display: none;
 }
 
-@media (min-width: 50em){
+@media (min-width: 50em) {
   .display-md-inline-flex {
     display: inline-flex;
   }
