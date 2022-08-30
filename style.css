@@ -298,75 +298,59 @@ p[data-width="width"] {
   --logo-color: var(--clr-neutral-100);
 }
 
-.primary-footer-wrapper {
+.primary-footer__wrapper {
   display: grid;
   gap: var(--size-700);
+  justify-content: center;
+  align-items: start;
   /* You can name grid items by using the grid-area property, and then reference to the name in the grid-template-areas property. */
   /* Show elements beneath each other on smaller screens */
   grid-template-areas:
     "form"
     "nav"
-    "logo-social";
+    "social"
+    "logo"
+    "copyright";
 }
 
-.primary-footer-logo-social {
+.primary-footer__logo {
+  grid-area: logo; /* Position footer logo on bottom */
+}
+
+.primary-footer__form {
+  grid-area: form;
+}
+
+.primary-footer__copyright {
+  grid-area: copyright;
+  text-align: center;
+  opacity: 0.7;
+}
+
+/*.primary-footer-logo-social {
   grid-area: logo-social;
 
   display: flex;
-  flex-direction: column-reverse; /* column - The flexible items are displayed vertically, as a column; column-reverse - Same as column, but in reverse order */
+  flex-direction: column-reverse; /* column - The flexible items are displayed vertically, as a column; column-reverse - Same as column, but in reverse order *
   align-items: center;
   gap: var(--size-700);
-}
+}*/
+
 /* Another way of doing same thing when html element doesn't have it's dedicated class is getting html elements with their number from parent element, like this */
 /* :nth-child(number) - number is the child number you are targeting */
 /* .primary-footer-wrapper > :nth-child(1) {
   grid-area: logo-social;
 } */
-.primary-footer-nav {
+.primary-footer__nav-wrapper {
   grid-area: nav;
-}
-.primary-footer-form {
-  grid-area: form;
-
-  display: grid;
-  align-content: space-between;
-}
-
-.primary-footer form {
-  display: flex;
-  gap: var(--size-200);
-}
-
-input:where([type="text"], [type="email"]) {
-  border-radius: 100vw; /* this allays makes pillow shape */
-  border: 0;
-  padding: var(--size-300) var(--size-400);
-}
-
-@media (min-width: 50em) {
-  .primary-footer-wrapper {
-    /* Show elements besides each other (inline) on larger screens */
-    grid-template-areas: "logo-social nav form";
-  }
-
-  .primary-footer-logo-social {
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--size-700);
-  }
-}
-
-@media (max-width: 50em) {
-  .primary-footer-wrapper > * {
-    margin-inline: auto;
-  }
+  margin-inline: auto;
 }
 
 /* Footer navigation */
 
 .footer-nav {
   columns: 2;
-  gap: clamp(var(--size-200), 10vw, var(--size-900));
+  gap: clamp(4rem, 10vw, 7rem);
   line-height: 1;
 }
 
@@ -377,6 +361,40 @@ input:where([type="text"], [type="email"]) {
 /* main :where(h1, h2, h3) equivalent to main h1, main h2, main h3  */
 .footer-nav a:where(:hover, :focus) {
   color: var(--clr-accent-400);
+}
+
+.primary-footer__form {
+  grid-area: form;
+
+  display: flex;
+  gap: var(--size-200);
+}
+
+input:where([type="text"], [type="email"]) {
+  border-radius: 100vw; /* this allays makes pillow shape */
+  border: 0;
+  padding: var(--size-300) var(--size-500);
+}
+
+@media (min-width: 55.2em) {
+  .primary-footer__wrapper {
+    /* Show elements besides each other (inline) on larger screens */
+    /* grid-template-areas: "logo-social nav form"; */
+    grid-template-areas:
+      "logo nav form"
+      "social nav copyright";
+    grid-template-columns: min-content 1fr auto;
+  }
+
+  .primary-footer__copyright {
+    text-align: right;
+  }
+}
+
+@media (max-width: 50em) {
+  .primary-footer__wrapper > * {
+    margin-inline: auto;
+  }
 }
 
 /* social list */
@@ -390,6 +408,16 @@ input:where([type="text"], [type="email"]) {
   width: var(--size-600);
   aspect-ratio: 1; /* svg icons are squares, to eliminate access hight show them as 1:1 aspect ratio */
   fill: var(--clr-neutral-100);
+}
+
+@media (min-width: 50em) {
+  .social-list {
+    gap: var(--size-300);
+  }
+  .social-icon {
+    width: var(--size-500);
+    max-width: revert;
+  }
 }
 
 /* is function is same as where */
@@ -807,6 +835,9 @@ Same as .flow:not(:first-child) - but this one has high specificity and cannot b
 }
 .margin-bottom-700 {
   margin-block-end: var(--size-700);
+}
+.margin-top-900 {
+  margin-block-start: var(--size-900);
 }
 
 .mx-auto {
